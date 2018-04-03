@@ -15,6 +15,42 @@ TForm1 *Form1;
         int counter=0;
         char whoScoredThePoint = 'P';
 
+void stopTheGame(){
+        Form1->ballTimer->Enabled =false;
+        Form1->ball->Visible=false;
+        Form1->continueGameButton->Caption = "Kolejna runda";
+        Form1->continueGameButton->Visible = true;
+        Form1->newGameButton->Caption = "Nowa gra";
+        Form1->newGameButton->Visible = true;
+        Form1->counterLabel->Caption = "Liczba odbic: "+IntToStr(counter);
+        Form1->counterLabel->Visible = True;
+        Form1->scoreTable->Caption=IntToStr(leftScore)+":"+IntToStr(rightScore);
+        Form1->scoreTable->Visible=true;
+}
+
+void windowSettings(){
+        //ustawienia okien
+        Form1->Label1->Left = Form1->Background->Width/2-Form1->Label1->Width/2;
+        Form1->Label1->Top = 20;
+        Form1->continueGameButton->Left = Form1->Background->Width/2-Form1->continueGameButton->Width/2;
+        Form1->continueGameButton->Top = 50+Form1->Label1->Height+Form1->scoreTable->Height+Form1->counterLabel->Height;
+        Form1->newGameButton->Left = Form1->Background->Width/2-Form1->newGameButton->Width/2;
+        Form1->newGameButton->Top = Form1->Background->Height-Form1->newGameButton->Height-20;
+        Form1->counterLabel ->Left = Form1->Background->Width/2-Form1->counterLabel->Width/2;
+        Form1->counterLabel ->Top = 40+Form1->Label1->Height+Form1->scoreTable->Height;
+        Form1->scoreTable->Left = Form1->Background->Width/2-Form1->scoreTable->Width/2;
+        Form1->scoreTable->Top = 30+Form1->Label1->Height;
+}
+
+void paddleAndBallSettings(){
+        Form1->ball -> Left = Form1->Background->Width/2;
+        Form1->ball -> Top = Form1->Background->Height/2;
+        Form1->paddleLeft -> Top = Form1->Background->Height/2-Form1->paddleLeft->Height/2;
+        Form1->paddleLeft -> Left = 20;
+        Form1->paddleRight -> Top = Form1->Background->Height/2-Form1->paddleRight->Height/2;
+        Form1->paddleRight -> Left = Form1->Background->Width-20-Form1->paddleRight->Width;
+}
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -64,17 +100,7 @@ void __fastcall TForm1::paddleLeftDownTimer(TObject *Sender)
 
 void __fastcall TForm1::ballTimerTimer(TObject *Sender)
 {
-        //ustawienia okien
-        Label1->Left = Background->Width/2-Label1->Width/2;
-        Label1->Top = 20;
-        continueGameButton->Left = Background->Width/2-continueGameButton->Width/2;
-        continueGameButton->Top = 50+Label1->Height+scoreTable->Height+counterLabel->Height;
-        newGameButton->Left = Background->Width/2-newGameButton->Width/2;
-        newGameButton->Top = Background->Height-newGameButton->Height-20;
-        counterLabel ->Left = Background->Width/2-counterLabel->Width/2;
-        counterLabel ->Top = 40+Label1->Height+scoreTable->Height;
-        scoreTable->Left = Background->Width/2-scoreTable->Width/2;
-        scoreTable->Top = 30+Label1->Height;
+        windowSettings();
 
         //ruch pilki
         ball->Left+=x;
@@ -88,35 +114,17 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
 
         //faule i odbicia pilki od paletek
         if (ball->Left <paddleLeft->Left+paddleLeft->Width-40){
-                ballTimer->Enabled =false;
-                ball->Visible=false;
                 rightScore++;
                 whoScoredThePoint = 'P';
+                stopTheGame();
                 Label1->Caption = "Punkt dla gracza prawego! >";
                 Label1->Visible = true;
-                continueGameButton->Caption = "Kolejna runda";
-                continueGameButton->Visible = true;
-                newGameButton->Caption = "Nowa gra";
-                newGameButton->Visible = true;
-                counterLabel->Caption = "Liczba odbic: "+IntToStr(counter);
-                counterLabel->Visible = True;
-                scoreTable->Caption=IntToStr(leftScore)+":"+IntToStr(rightScore);
-                scoreTable->Visible=true;
         }else if (ball->Left>paddleRight->Left+40){
-                ballTimer->Enabled =false;
-                ball->Visible=false;
                 leftScore++;
                 whoScoredThePoint = 'L';
+                stopTheGame();
                 Label1->Caption = "< Punkt dla gracza lewego!";
                 Label1->Visible = true;
-                continueGameButton->Caption = "Kolejna runda";
-                continueGameButton->Visible = true;
-                newGameButton->Caption = "Nowa gra";
-                newGameButton->Visible = true;
-                counterLabel->Caption = "Liczba odbic: "+IntToStr(counter);
-                counterLabel->Visible = True;
-                scoreTable->Caption=IntToStr(leftScore)+":"+IntToStr(rightScore);
-                scoreTable->Visible=true;
         }else if (ball->Top > paddleLeft->Top-ball->Height/2 &&
         ball->Top+ball->Height/2 < paddleLeft->Top + paddleLeft->Height &&
         ball->Left<paddleLeft->Left+paddleLeft->Width){
@@ -140,13 +148,8 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
 
 void __fastcall TForm1::newGameButtonClick(TObject *Sender)
 {       if(Application->MessageBox("Czy chcesz rozpoczac nowa gre?","Nowa gra", MB_YESNO | MB_ICONQUESTION) == IDYES ){
-                ball -> Left = Background->Width/2;
-                ball -> Top = Background->Height/2;
+                paddleAndBallSettings();
                 ball ->Visible = true;
-                paddleLeft -> Top = Background->Height/2-paddleLeft->Height/2;
-                paddleLeft -> Left = 20;
-                paddleRight -> Top = Background->Height/2-paddleRight->Height/2;
-                paddleRight -> Left = Background->Width-20-paddleRight->Width;
                 Label1->Visible = false;
                 continueGameButton->Visible = false;
                 newGameButton->Visible = false;
@@ -166,13 +169,8 @@ void __fastcall TForm1::newGameButtonClick(TObject *Sender)
 
 
 void __fastcall TForm1::continueGameButtonClick(TObject *Sender)
-{       ball -> Left = Background->Width/2;
-        ball -> Top = Background->Height/2;
+{       paddleAndBallSettings();
         ball ->Visible = true;
-        paddleLeft -> Top = Background->Height/2-paddleLeft->Height/2;
-        paddleLeft -> Left = 20;
-        paddleRight -> Top = Background->Height/2-paddleRight->Height/2;
-        paddleRight -> Left = Background->Width-20-paddleRight->Width;
         Label1->Visible = false;
         continueGameButton->Visible = false;
         newGameButton->Visible = false;
