@@ -23,7 +23,7 @@ __published:	// IDE-managed Components
         TImage *ball;
         TTimer *ballTimer;
         TButton *newGameButton;
-        TLabel *Label1;
+        TLabel *helloLabel;
         TLabel *scoreTable;
         TButton *continueGameButton;
         TLabel *counterLabel;

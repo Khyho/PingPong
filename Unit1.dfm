@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 205
-  Top = 208
+  Top = 207
   AutoScroll = False
   Caption = 'PingPongByKrzysiek'
-  ClientHeight = 460
+  ClientHeight = 461
   ClientWidth = 1261
   Color = clBtnFace
   UseDockManager = True
@@ -23,7 +23,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 1261
-    Height = 460
+    Height = 461
     Align = alClient
     Brush.Color = clTeal
   end
@@ -719,14 +719,14 @@ object Form1: TForm1
       FFFF}
     Transparent = True
   end
-  object Label1: TLabel
+  object helloLabel: TLabel
     Left = 408
     Top = 24
     Width = 417
     Height = 65
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Label1'
+    Caption = 'helloLabel'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -31

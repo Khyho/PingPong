@@ -30,16 +30,16 @@ void stopTheGame(){
 
 void windowSettings(){
         //ustawienia okien
-        Form1->Label1->Left = Form1->Background->Width/2-Form1->Label1->Width/2;
-        Form1->Label1->Top = 20;
+        Form1->helloLabel->Left = Form1->Background->Width/2-Form1->helloLabel->Width/2;
+        Form1->helloLabel->Top = 20;
         Form1->continueGameButton->Left = Form1->Background->Width/2-Form1->continueGameButton->Width/2;
-        Form1->continueGameButton->Top = 50+Form1->Label1->Height+Form1->scoreTable->Height+Form1->counterLabel->Height;
+        Form1->continueGameButton->Top = 50+Form1->helloLabel->Height+Form1->scoreTable->Height+Form1->counterLabel->Height;
         Form1->newGameButton->Left = Form1->Background->Width/2-Form1->newGameButton->Width/2;
         Form1->newGameButton->Top = Form1->Background->Height-Form1->newGameButton->Height-20;
         Form1->counterLabel ->Left = Form1->Background->Width/2-Form1->counterLabel->Width/2;
-        Form1->counterLabel ->Top = 40+Form1->Label1->Height+Form1->scoreTable->Height;
+        Form1->counterLabel ->Top = 40+Form1->helloLabel->Height+Form1->scoreTable->Height;
         Form1->scoreTable->Left = Form1->Background->Width/2-Form1->scoreTable->Width/2;
-        Form1->scoreTable->Top = 30+Form1->Label1->Height;
+        Form1->scoreTable->Top = 30+Form1->helloLabel->Height;
 }
 
 void paddleAndBallSettings(){
@@ -117,14 +117,14 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
                 rightScore++;
                 whoScoredThePoint = 'P';
                 stopTheGame();
-                Label1->Caption = "Punkt dla gracza prawego! >";
-                Label1->Visible = true;
+                helloLabel->Caption = "Punkt dla gracza prawego! >";
+                helloLabel->Visible = true;
         }else if (ball->Left>paddleRight->Left+40){
                 leftScore++;
                 whoScoredThePoint = 'L';
                 stopTheGame();
-                Label1->Caption = "< Punkt dla gracza lewego!";
-                Label1->Visible = true;
+                helloLabel->Caption = "< Punkt dla gracza lewego!";
+                helloLabel->Visible = true;
         }else if (ball->Top > paddleLeft->Top-ball->Height/2 &&
         ball->Top+ball->Height/2 < paddleLeft->Top + paddleLeft->Height &&
         ball->Left<paddleLeft->Left+paddleLeft->Width){
@@ -150,7 +150,7 @@ void __fastcall TForm1::newGameButtonClick(TObject *Sender)
 {       if(Application->MessageBox("Czy chcesz rozpoczac nowa gre?","Nowa gra", MB_YESNO | MB_ICONQUESTION) == IDYES ){
                 paddleAndBallSettings();
                 ball ->Visible = true;
-                Label1->Visible = false;
+                helloLabel->Visible = false;
                 continueGameButton->Visible = false;
                 newGameButton->Visible = false;
                 scoreTable->Visible = false;
@@ -171,7 +171,7 @@ void __fastcall TForm1::newGameButtonClick(TObject *Sender)
 void __fastcall TForm1::continueGameButtonClick(TObject *Sender)
 {       paddleAndBallSettings();
         ball ->Visible = true;
-        Label1->Visible = false;
+        helloLabel->Visible = false;
         continueGameButton->Visible = false;
         newGameButton->Visible = false;
         scoreTable->Visible = false;
@@ -191,12 +191,12 @@ void __fastcall TForm1::continueGameButtonClick(TObject *Sender)
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {       Application->MessageBox("Witaj w grze w Ping Ponga.\nSterowanie lewa paletka: A - do gory, Z - w dol. \nSterowanie prawa paletka: strzalka w gore i w dol. \n"
         "Im dluzej grasz tym szybciej leci pilka. \nMozesz zmieniac pole gry. \nPowodzenia i milej zabawy!","Witaj!", MB_OK);
-        Label1->Caption = "Witaj w grze Ping Pong!";
-        Label1->Left = Background->Width/2-Label1->Width/2;
-        Label1->Top = 20;
+        helloLabel->Caption = "Witaj w grze Ping Pong!";
+        helloLabel->Left = Background->Width/2-helloLabel->Width/2;
+        helloLabel->Top = 20;
         newGameButton->Left = Background->Width/2-newGameButton->Width/2;
         newGameButton->Top = Background->Height-newGameButton->Height-20;
-        Label1->Visible = true;
+        helloLabel->Visible = true;
         newGameButton->Visible = true;
 
         newGameButton->Caption = "Nowa gra";
